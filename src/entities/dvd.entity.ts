@@ -22,7 +22,7 @@ export class Dvd {
   @Column({ nullable: false })
   duration: number;
 
-  @ManyToOne((type) => Cart, (cart) => cart.dvd)
+  @ManyToOne((type) => Cart, (cart) => cart.dvds)
   cart?: Cart;
 
   @OneToOne((type) => Stock, { eager: true, nullable: false })

@@ -28,5 +28,5 @@ export class Cart {
   @OneToMany((type) => Dvd, (dvd) => dvd.cart, {
     eager: true,
   })
-  dvd: Dvd;
+  dvds: Dvd[];
 }

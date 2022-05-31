@@ -2,7 +2,9 @@ import { Request, Response } from "express";
 import CartService from "../services/Cart.service";
 class CartController {
   putCartcontroller = async (request: Request, response: Response) => {
-    const { status, message } = await CartService.putCartService(request.body);
+    const { status, message } = await CartService.putCartService(
+      request.userEmail
+    );
     return response.status(status).json(message);
   };
 }

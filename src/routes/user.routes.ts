@@ -11,8 +11,8 @@ const userRoutes = Router();
 
 userRoutes.post(
   "",
-  validateTokenMiddlere,
-  validateUserMiddleware(userCreateSchema),
+  // validateTokenMiddlere,
+  // validateUserMiddleware(userCreateSchema),
   UserController.postUsercontroller
 );
 userRoutes.post(

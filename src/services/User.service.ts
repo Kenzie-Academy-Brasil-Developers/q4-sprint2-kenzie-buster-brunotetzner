@@ -15,7 +15,6 @@ class UserService {
 
   loginUserService = async ({ email, password }: IUserLogin) => {
     const user = await userRepositories.getByEmail(email);
-    console.log(user);
     if (!user) {
       return { status: 400, message: "User not found" };
     }

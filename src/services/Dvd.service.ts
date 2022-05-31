@@ -20,13 +20,10 @@ class DvdService {
 
   buyDvdService = async (id: string, quantity: number, userEmail: string) => {
     const user: any = await userRepositories.getByEmail(userEmail);
-    // const user = users.find((item) => item.email === userEmail);
     const dvd = await DvdRepository.retrieve(id);
-
     if (!dvd) {
       throw new AppError(404, "Dvd not found");
     }
-
     const stockId: any = dvd?.stock.uuid;
     const newStock = { quantity: dvd.stock.quantity - quantity };
 
@@ -37,12 +34,29 @@ class DvdService {
       );
     }
 
-    const stockActualized = await stockRepositories.update(stockId, newStock);
+    await stockRepositories.update(stockId, newStock);
+
     const total = quantity * dvd.stock.price;
-    const cartToSave = { total: total, user: user, dvd: dvd };
-    const cart = await cartRepositories.save(cartToSave);
-    console.log("HERE");
-    return { status: 200, message: cart };
+
+    const carts = await cartRepositories.getAll();
+    const cartAlreadyExists = carts.find(
+      (cart) => cart.user.email === user.email && cart.paid == false
+    );
+
+    if (cartAlreadyExists) {
+      const newTotal = total + cartAlreadyExists.total;
+      const dvds = [...cartAlreadyExists.dvds, dvd];
+      const cartId: any = cartAlreadyExists.uuid;
+      const cart = await cartRepositories.update(cartId, {
+        total: newTotal,
+        // dvds: dvds,
+      });
+      return { status: 200, message: cart };
+    }
+
+    const cartToSave = { total, user, dvds: [dvd] };
+    const newCart = await cartRepositories.save(cartToSave);
+    return { status: 200, message: newCart };
   };
 }
 
