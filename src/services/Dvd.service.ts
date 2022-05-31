@@ -5,7 +5,7 @@ import stockRepositories from "../repositories/stock.repositories";
 import cartRepositories from "../repositories/cart.repositories";
 import userRepositories from "../repositories/user.repositories";
 import { User } from "../entities/user.entity";
-
+import { Dvd } from "../entities/dvd.entity";
 class DvdService {
   postDvdService = async ({ name, duration, quantity, price }: IDvdToPost) => {
     const stock = await stockRepositories.save({ quantity, price });
@@ -19,12 +19,13 @@ class DvdService {
   };
 
   buyDvdService = async (id: string, quantity: number, userEmail: string) => {
-    const user: any = await userRepositories.getByEmail(userEmail);
-    const dvd = await DvdRepository.retrieve(id);
+    const user: User = await userRepositories.getByEmail(userEmail);
+    const dvd: Dvd | any = await DvdRepository.retrieve(id);
+    console.log("ACHOU O DVD");
     if (!dvd) {
       throw new AppError(404, "Dvd not found");
     }
-    const stockId: any = dvd?.stock.uuid;
+    const stockId: string = dvd.stock.uuid;
     const newStock = { quantity: dvd.stock.quantity - quantity };
 
     if (newStock.quantity < 0) {
@@ -46,7 +47,7 @@ class DvdService {
     if (cartAlreadyExists) {
       const newTotal = total + cartAlreadyExists.total;
       const dvds = [...cartAlreadyExists.dvds, dvd];
-      const cartId: any = cartAlreadyExists.uuid;
+      const cartId: string = cartAlreadyExists.uuid;
       const cart = await cartRepositories.update(cartId, {
         total: newTotal,
         // dvds: dvds,

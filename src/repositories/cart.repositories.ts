@@ -6,9 +6,9 @@ import { hash } from "bcrypt";
 interface ICartRepo {
   save: (cart: Partial<Cart>) => Promise<Cart>;
   getAll: () => Promise<Cart[]>;
-  retrieve: (payload: string) => Promise<Cart | {}>;
+  retrieve: (payload: string) => Promise<Cart | null>;
   update: (uuid: string, payload: Partial<Cart>) => Promise<{} | null>;
-  delete: (uuid: string) => Promise<Cart | {}>;
+  delete: (uuid: string) => Promise<Cart>;
 }
 
 class CartRepository implements ICartRepo {
@@ -25,12 +25,7 @@ class CartRepository implements ICartRepo {
   getAll = async () => await this.repo.find();
 
   retrieve = async (uuid: string) => {
-    const user = await this.repo.findOneBy({ uuid: uuid });
-
-    if (user) {
-      return user;
-    }
-    return {};
+    return await this.repo.findOneBy({ uuid: uuid });
   };
 
   update = async (uuid: string, payload: Partial<Cart>) => {

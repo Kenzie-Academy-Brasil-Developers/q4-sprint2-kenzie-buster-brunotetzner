@@ -6,9 +6,9 @@ import { hash } from "bcrypt";
 interface IDvdRepo {
   save: (Dvd: Dvd) => Promise<Dvd>;
   getAll: () => Promise<Dvd[]>;
-  retrieve: (payload: string) => Promise<Dvd | null>;
+  retrieve: (payload: string) => Promise<Dvd | {}>;
   update: (uuid: string, payload: Partial<Dvd>) => Promise<{} | null>;
-  delete: (uuid: string) => Promise<Dvd | null>;
+  delete: (uuid: string) => Promise<Dvd | {}>;
 }
 
 class DvdRepository implements IDvdRepo {

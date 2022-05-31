@@ -13,7 +13,7 @@ class DvdController {
   buyDvdController = async (request: Request, response: Response) => {
     const { id } = request.params;
     const { quantity } = request.body;
-    const userEmail = "user@mail.com";
+    const userEmail = "user1@mail.com";
     const { status, message } = await DvdService.buyDvdService(
       id,
       quantity,
