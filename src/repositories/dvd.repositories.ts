@@ -6,9 +6,9 @@ import { hash } from "bcrypt";
 interface IDvdRepo {
   save: (Dvd: Dvd) => Promise<Dvd>;
   getAll: () => Promise<Dvd[]>;
-  retrieve: (payload: string) => Promise<Dvd | {}>;
+  retrieve: (payload: object) => Promise<Dvd>;
   update: (uuid: string, payload: Partial<Dvd>) => Promise<{} | null>;
-  delete: (uuid: string) => Promise<Dvd | {}>;
+  // delete: (uuid: string) => Promise<Dvd | {}>;
 }
 
 class DvdRepository implements IDvdRepo {
@@ -22,8 +22,9 @@ class DvdRepository implements IDvdRepo {
 
   getAll = async () => await this.repo.find();
 
-  retrieve = async (uuid: string) => {
-    return await this.repo.findOneBy({ uuid: uuid });
+  retrieve = async (payload: object) => {
+    const dvd = await this.repo.findOneBy({ ...payload });
+    return dvd;
   };
 
   update = async (uuid: string, payload: Partial<Dvd>) => {
@@ -34,11 +35,11 @@ class DvdRepository implements IDvdRepo {
     return {};
   };
 
-  delete = async (uuid: string) => {
-    const DvdToDelete = await this.retrieve(uuid);
-    await this.repo.delete(uuid);
-    return DvdToDelete;
-  };
+  //   delete = async (uuid: string) => {
+  //     const DvdToDelete = await this.retrieve(uuid);
+  //     await this.repo.delete(uuid);
+  //     return DvdToDelete;
+  //   };
 }
 
 export default new DvdRepository();

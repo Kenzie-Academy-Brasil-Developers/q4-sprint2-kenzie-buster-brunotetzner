@@ -7,20 +7,13 @@ class CartService {
   putCartService = async (userEmail: string) => {
     const allCarts = await cartRepositories.getAll();
     const cart: Cart = allCarts.find((cart) => cart.user.email === userEmail);
-
     if (!cart || cart.paid === true) {
-      const paidUserBuys = allCarts.filter(
-        (cart) => cart.user.email === userEmail
-      );
-      if (paidUserBuys) {
-        throw new AppError(
-          404,
-          `You don't have a cart to pay\n ${{
-            old_buys_that_you_paid: paidUserBuys,
-          }}`
-        );
-      }
-      throw new AppError(404, "You don't have a cart to pay");
+      // throw new AppError(404, "You don't have a cart to pay");
+      return {
+        status: 404,
+        message: { Error: "You don't have a cart to pay" },
+      };
+      console.log("HEREEE");
     }
     const id: string = cart.uuid;
     await cartRepositories.update(id, { paid: true });
@@ -33,8 +26,9 @@ class CartService {
         dvd: editedCart.dvds,
       },
     };
-    return { status: 200, message: editedCart };
+    return { status: 200, message: infoToReturn };
   };
+  infoToReturn;
 }
 
 export default new CartService();

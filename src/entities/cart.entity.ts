@@ -2,7 +2,7 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  OneToOne,
+  ManyToOne,
   JoinColumn,
   OneToMany,
 } from "typeorm";
@@ -21,10 +21,8 @@ export class Cart {
   @Column({ default: false })
   paid?: boolean;
 
-  @OneToOne((type) => User, { eager: true })
-  @JoinColumn()
+  @ManyToOne((type) => User, (user) => user.carts)
   user: User;
-
   @OneToMany((type) => Dvd, (dvd) => dvd.cart, {
     eager: true,
   })

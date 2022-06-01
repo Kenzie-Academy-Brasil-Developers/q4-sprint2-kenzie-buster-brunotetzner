@@ -1,7 +1,6 @@
 import { Router } from "express";
 import UserController from "../controllers/User.controller";
 import { validateTokenMiddlere } from "../middlewares/validateToken.middleware";
-import { validateUserLoginMiddleware } from "../middlewares/validateUserlogin.middleware";
 import {
   validateUserMiddleware,
   userCreateSchema,
@@ -12,12 +11,8 @@ const userRoutes = Router();
 userRoutes.post(
   "",
   // validateTokenMiddlere,
-  // validateUserMiddleware(userCreateSchema),
+  validateUserMiddleware(userCreateSchema),
   UserController.postUsercontroller
 );
-userRoutes.post(
-  "/login",
-  // validateUserLoginMiddleware,
-  UserController.loginUserController
-);
+userRoutes.post("/login", UserController.loginUserController);
 export default userRoutes;

@@ -19,7 +19,9 @@ class CartRepository implements ICartRepo {
   }
 
   save = async (cart: Partial<Cart>) => {
-    return await this.repo.save(cart);
+    const createCart = await this.repo.save(cart);
+    console.log("SAVED");
+    return createCart;
   };
 
   getAll = async () => await this.repo.find();

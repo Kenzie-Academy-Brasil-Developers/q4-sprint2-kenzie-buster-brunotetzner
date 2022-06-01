@@ -1,5 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
-
+import {
+  Entity,
+  OneToMany,
+  Column,
+  PrimaryGeneratedColumn,
+  JoinColumn,
+} from "typeorm";
+import { Cart } from "./cart.entity";
 @Entity("users")
 export class User {
   @PrimaryGeneratedColumn("uuid")
@@ -16,4 +22,8 @@ export class User {
 
   @Column({ default: false })
   isAdmin: boolean;
+
+  @OneToMany((type) => Cart, (cart) => cart.user)
+  @JoinColumn()
+  carts?: Cart[];
 }

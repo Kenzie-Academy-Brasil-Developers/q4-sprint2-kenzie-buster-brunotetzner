@@ -25,7 +25,10 @@ export class Dvd {
   @ManyToOne((type) => Cart, (cart) => cart.dvds)
   cart?: Cart;
 
-  @OneToOne((type) => Stock, { eager: true, nullable: false })
+  @OneToOne((type) => Stock, (stock) => stock.dvd, {
+    eager: true,
+    nullable: false,
+  })
   @JoinColumn()
-  stock: Stock;
+  stock?: Stock;
 }

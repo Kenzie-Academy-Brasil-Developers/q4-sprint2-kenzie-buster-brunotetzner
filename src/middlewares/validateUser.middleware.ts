@@ -28,12 +28,14 @@ export const validateUserMiddleware =
       );
 
       if (emailAlreadyExists) {
-        throw new AppError(409, "Email already exists");
+        // throw new AppError(409, "Email already exists");
+        return response.status(409).json("Emai already exists");
       }
 
       const user = await userRepositories.getByEmail(request.userEmail);
       if (user?.isAdmin === false && request.body.isAdmin === true) {
-        throw new AppError(401, "missing admin permision");
+        // throw new AppError(401, "missing admin permision");
+        return response.status(401).json("missing admin permision");
       }
       try {
         const validatedData = await schema.validate(data, {
@@ -43,7 +45,8 @@ export const validateUserMiddleware =
         request.newUser = validatedData;
         next();
       } catch (err: any) {
-        throw new AppError(400, err.errors?.join(", "));
+        // throw new AppError(400, err.errors?.join(", "));
+        return response.status(400).json(err.errors?.join(", "));
       }
     } catch (err) {
       next(err);

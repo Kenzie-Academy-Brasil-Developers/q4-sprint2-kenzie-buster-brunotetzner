@@ -8,7 +8,8 @@ export const validateAdminMiddleware = async (
 ) => {
   const user = await userRepositories.getByEmail(request.userEmail);
   if (user?.isAdmin === false) {
-    throw new AppError(401, "missing admin permision");
+    // throw new AppError(401, "missing admin permision");
+    return response.status(401).json("missing admin permision");
   }
 
   next();
