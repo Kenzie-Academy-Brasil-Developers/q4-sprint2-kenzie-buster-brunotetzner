@@ -23,7 +23,7 @@ export class User {
   @Column({ default: false })
   isAdmin: boolean;
 
-  @OneToMany((type) => Cart, (cart) => cart.user)
+  @OneToMany((type) => Cart, (cart) => cart.user, { eager: true })
   @JoinColumn()
   carts?: Cart[];
 }

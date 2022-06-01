@@ -7,7 +7,7 @@ class UserController {
   };
   loginUserController = async (request: Request, response: Response) => {
     const { email, password } = request.body;
-    if (!(email | password)) {
+    if (!(email || password)) {
       return response
         .status(400)
         .json({ Error: "You need to inform email and password" });

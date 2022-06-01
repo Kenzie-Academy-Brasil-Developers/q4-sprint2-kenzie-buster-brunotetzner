@@ -1,3 +1,4 @@
+// import "express-async-errors";
 import { Router } from "express";
 import UserController from "../controllers/User.controller";
 import { validateTokenMiddlere } from "../middlewares/validateToken.middleware";
@@ -10,7 +11,7 @@ const userRoutes = Router();
 
 userRoutes.post(
   "",
-  // validateTokenMiddlere,
+  validateTokenMiddlere,
   validateUserMiddleware(userCreateSchema),
   UserController.postUsercontroller
 );

@@ -33,8 +33,7 @@
   "scripts": {
     "dev": "ts-node-dev --files src/server.ts",
     "start": "node build/server.js",
-    "typeorm":"typeorm-ts-node-commonjs",
+    "typeorm": "typeorm-ts-node-commonjs",
     "build": "tsc"
-    }   
   }
-
+}

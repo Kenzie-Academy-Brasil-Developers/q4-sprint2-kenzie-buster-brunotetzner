@@ -26,7 +26,7 @@ export const validateUserMiddleware =
         next();
       } catch (err: any) {
         // throw new AppError(400, err.errors?.join(", "));
-        return response.status(400).json(err.errors?.join(", "));
+        return response.status(400).json({ Error: err.errors?.join(", ") });
       }
     } catch (err) {
       next(err);

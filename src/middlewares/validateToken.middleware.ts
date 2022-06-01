@@ -1,9 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
+require("dotenv").config();
 
 import { AppError } from "../errors/appError";
+import { User } from "../entities/user.entity";
 
-export const validateTokenMiddlere = (
+export const validateTokenMiddlere = async (
   request: Request,
   response: Response,
   next: NextFunction
@@ -12,12 +14,12 @@ export const validateTokenMiddlere = (
 
   if (!token) {
     // throw new AppError(401, "Missing authorization header");
-    return response.status(401).json("Missing authorization header");
+    return response.status(401).json({ Error: "Missing authorization header" });
   }
 
   jwt.verify(token, "SECRET KEY", (error, decoded: any) => {
     if (error) {
-      // console.log(token);
+      // (token);
       // throw new AppError(401, "Invalid token");
       return response.status(401).json({ Error: "Invalid Token" });
     }

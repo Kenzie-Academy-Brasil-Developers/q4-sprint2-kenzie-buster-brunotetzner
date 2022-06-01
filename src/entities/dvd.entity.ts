@@ -2,8 +2,7 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  ManyToMany,
-  ManyToOne,
+  OneToMany,
   OneToOne,
   JoinColumn,
 } from "typeorm";
@@ -22,13 +21,15 @@ export class Dvd {
   @Column({ nullable: false })
   duration: number;
 
-  @ManyToOne((type) => Cart, (cart) => cart.dvds)
-  cart?: Cart;
-
   @OneToOne((type) => Stock, (stock) => stock.dvd, {
     eager: true,
     nullable: false,
   })
   @JoinColumn()
   stock?: Stock;
+
+  @OneToMany((type) => Cart, (cart) => cart.dvd, {
+    eager: true,
+  })
+  carts?: Cart[];
 }

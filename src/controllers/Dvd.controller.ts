@@ -6,8 +6,7 @@ class DvdController {
     return response.status(status).json(message);
   };
   getDvdsController = async (request: Request, response: Response) => {
-    const { id } = request.params;
-    const { status, message } = await DvdService.getDvdsService(id);
+    const { status, message } = await DvdService.getDvdsService();
     return response.status(status).json(message);
   };
   buyDvdController = async (request: Request, response: Response) => {

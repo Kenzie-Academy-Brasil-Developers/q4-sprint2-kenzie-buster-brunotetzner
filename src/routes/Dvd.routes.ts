@@ -17,7 +17,7 @@ dvdRoutes.post(
   DvdController.postDvdcontroller
 );
 
-dvdRoutes.get("/:id", validateTokenMiddlere, DvdController.getDvdsController);
+dvdRoutes.get("", DvdController.getDvdsController);
 
 dvdRoutes.post(
   "/buy/:id",
