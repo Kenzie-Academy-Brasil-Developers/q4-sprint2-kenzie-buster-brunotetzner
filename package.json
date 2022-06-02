@@ -32,7 +32,7 @@
   },
   "scripts": {
     "dev": "ts-node-dev --files src/server.ts",
-    "start": "node build/server.js",
+    "start": "node dist/server.js",
     "typeorm": "typeorm-ts-node-commonjs",
     "build": "tsc"
   }

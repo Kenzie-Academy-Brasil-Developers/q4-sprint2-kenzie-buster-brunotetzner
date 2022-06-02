@@ -1,10 +1,10 @@
 import { app } from "./app";
 import { AppDataSource } from "./data-source";
 
-const port = 3000;
 AppDataSource.initialize()
-  .then(() => {
-    console.log("Data source intialized");
+.then(() => {
+  console.log("Data source intialized");
+  const port = process.env.PORT ?? 3000;
     app.listen(port, () =>
       console.log(`App running!\nhttp://localhost:${port}/`)
     );
